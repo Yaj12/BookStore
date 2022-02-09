@@ -8,4 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/books', bookController.viewAll);
+router.get('/books/profile/:id', bookController.viewProfile);
+router.get('/books/edit/:id', bookController.renderEditForm);
+router.get('/books/add', bookController.renderAddForm);
 module.exports = router;
