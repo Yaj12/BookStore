@@ -1,16 +1,16 @@
-const {Book} = require('../models')
+const {Book} = require('../models');
 const genres = ['Harem', 'Action Fiction', 'Romance', 'Thriller', 'Comedy'].sort();
 
 //view all
 module.exports.viewAll = async function(req,res){
     const books = await Book.findAll();
-    res.render('books/view_all', {books});
+    res.render('book/view_all', {books});
 }
 
 //profile
 module.exports.viewProfile= async function(req,res){
     const book = await Book.findByPk(req.params.id);
-    res.render('books/profile', {book});
+    res.render('book/profile', {book});
 }
 
 //render add form
@@ -28,6 +28,17 @@ module.exports.renderAddForm = function(req, res) {
 
 
 //add
+module.exports.addBook = async function(req, res){
+    const book = await Book.create({
+        title: req.body.title,
+        publisher: req.body.publisher,
+        genre: req.body.genre,
+        pages: req.body.pages,
+        image: req.body.image,
+        description: req.body.description
+    });
+    res.redirect(`/books/profile/${book.id}`);
+}
 
 //render edit form
 module.exports.renderEditForm = async function(req, res){
@@ -53,3 +64,11 @@ module.exports.updateBook = async function(req, res) {
 };
 
 //delete
+module.exports.deleteBook = async function(req, res){
+    await Book.destroy({
+       where: {
+           id:req.params.id
+       }
+       });
+    res.redirect('/book');
+}
