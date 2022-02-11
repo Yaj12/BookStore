@@ -70,5 +70,5 @@ module.exports.deleteBook = async function(req, res){
            id:req.params.id
        }
        });
-    res.redirect('/book');
+    res.redirect('/books');
 }
